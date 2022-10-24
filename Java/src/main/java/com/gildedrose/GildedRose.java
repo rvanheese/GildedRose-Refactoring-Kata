@@ -24,7 +24,12 @@ class GildedRose {
             } else if (item.name.equals(BACKSTAGE_PASSES)) {
                 updateQualityBackstagePass(item);
             } else {
-                if (item.quality > 0) item.quality -= 1;
+                if (item.quality > 0) {
+                    item.quality -= 1;
+                    if (item.name.toLowerCase().contains("conjured")) {
+                        updateQualityConjuredItem(item);
+                    }
+                }
             }
             // If item is expired
             if (item.sellIn < 0) {
@@ -63,6 +68,12 @@ class GildedRose {
         }
     }
 
+    private void updateQualityConjuredItem(Item item) {
+        if (item.quality > 0) {
+            item.quality -= 1;
+        }
+    }
+
     private void updateQualityExpiredItem(Item item) {
         if (item.name.equals(BACKSTAGE_PASSES)) {
             // Quality is 0 after the concert
@@ -75,6 +86,10 @@ class GildedRose {
             // Quality degrades twice as fast passed sell by date
             if (item.quality > 0) {
                 item.quality -= 1;
+                // "Conjured" items degrade in Quality twice as fast as normal items
+                if (item.name.toLowerCase().contains("conjured")) {
+                    updateQualityConjuredItem(item);
+                }
             }
         }
     }

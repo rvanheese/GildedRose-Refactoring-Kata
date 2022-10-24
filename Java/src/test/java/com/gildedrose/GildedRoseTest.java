@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class GildedRoseTest {
-
     // Start section regression tests
     @Test
     void testAgedBrie() {
@@ -117,6 +116,30 @@ class GildedRoseTest {
 
     // Start section new feature test
 
-    // End section new feature test
+    @Test
+    void testConjuredItems() {
+        Item[] items = new Item[] {
+            new Item("Mana cake", 5, 10),
+            new Item("Conjured Mana cake", 5, 10),
+            new Item("Orange Juice", -1, 10),
+            new Item("Conjured Orange Juice", -1, 10),
+            new Item("Health Potion", -1, 3),
+            new Item("Conjured Health Potion", -1, 3),
+            new Item("Conjured Cheese", 1, 1)
+        };
 
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+
+        // Conjured item quality checks
+        assertEquals(9, app.items[0].quality);
+        assertEquals(8, app.items[1].quality);
+        assertEquals(8, app.items[2].quality);
+        assertEquals(6, app.items[3].quality);
+        assertEquals(1, app.items[4].quality);
+        assertEquals(0, app.items[5].quality);
+        assertEquals(0, app.items[6].quality);
+    }
+
+    // End section new feature test
 }
