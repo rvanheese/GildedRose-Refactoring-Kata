@@ -1,11 +1,9 @@
 package com.gildedrose;
 
+import static com.gildedrose.QualityUpdater.*;
+
 class GildedRose {
     Item[] items;
-
-    // Constants for items
-    private final String AGED_BRIE = "Aged Brie";
-    private final String BACKSTAGE_PASSES = "Backstage passes to a TAFKAL80ETC concert";
 
     public GildedRose(Item[] items) {
         this.items = items;
@@ -17,19 +15,12 @@ class GildedRose {
                 continue;
             }
 
-            updateSellIn(item);
-
-            if (item.name.equals(AGED_BRIE)) {
-                updateQualityAgedBrie(item);
-            } else if (item.name.equals(BACKSTAGE_PASSES)) {
-                updateQualityBackstagePass(item);
+            if (item.name.equals("Aged Brie")) {
+                updateAgedBrieItem(item);
+            } else if (item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
+                updateBackstagePassItem(item);
             } else {
-                if (item.quality > 0) {
-                    item.quality -= 1;
-                    if (item.name.toLowerCase().contains("conjured")) {
-                        updateQualityConjuredItem(item);
-                    }
-                }
+                updateOtherItem(item);
             }
             // If item is expired
             if (item.sellIn < 0) {
@@ -38,59 +29,33 @@ class GildedRose {
         }
     }
 
-    private void updateSellIn(Item item) {
-        item.sellIn = item.sellIn - 1;
-    }
-
-    private void updateQualityAgedBrie(Item item) {
-        // Quality of an item is never more than 50
-        if (item.quality < 50) {
-            // Aged Brie increases in Quality
-            item.quality += 1;
+    private void updateOtherItem(Item item) {
+        item.sellIn--;
+        degradeItemQuality(item);
+        if (item.name.toLowerCase().contains("conjured")) {
+            degradeItemQuality(item);
         }
     }
 
-    private void updateQualityBackstagePass(Item item) {
-        // Quality of an item is never more than 50
-        if (item.quality < 50) {
-            // Backstage passes increase in Quality
-            item.quality += 1;
-        }
+    private void updateAgedBrieItem(Item item) {
+        item.sellIn--;
+        // Aged Brie increases in Quality
+        increaseItemQuality(item);
+    }
+
+    private void updateBackstagePassItem(Item item) {
+        item.sellIn--;
+        // Backstage passes increase in Quality
+        increaseItemQuality(item);
 
         // Quality increases by 2 for 10 days or less
-        if (item.sellIn < 11 && item.quality < 50) {
-            item.quality += 1;
+        if (item.sellIn < 11) {
+            increaseItemQuality(item);
         }
 
         // Quality increases by 3 for 5 days or less
-        if (item.sellIn < 6 && item.quality < 50) {
-            item.quality += 1;
-        }
-    }
-
-    private void updateQualityConjuredItem(Item item) {
-        if (item.quality > 0) {
-            item.quality -= 1;
-        }
-    }
-
-    private void updateQualityExpiredItem(Item item) {
-        if (item.name.equals(BACKSTAGE_PASSES)) {
-            // Quality is 0 after the concert
-            item.quality = 0;
-        } else if (item.name.equals(AGED_BRIE)) {
-            if (item.quality < 50) {
-                item.quality += 1;
-            }
-        } else {
-            // Quality degrades twice as fast passed sell by date
-            if (item.quality > 0) {
-                item.quality -= 1;
-                // "Conjured" items degrade in Quality twice as fast as normal items
-                if (item.name.toLowerCase().contains("conjured")) {
-                    updateQualityConjuredItem(item);
-                }
-            }
+        if (item.sellIn < 6) {
+            increaseItemQuality(item);
         }
     }
 }
