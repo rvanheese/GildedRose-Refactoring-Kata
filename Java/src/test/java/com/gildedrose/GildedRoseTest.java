@@ -8,13 +8,12 @@ class GildedRoseTest {
     // Start section regression tests
     @Test
     void testAgedBrie() {
-        String AGED_BRIE = "Aged Brie";
         Item[] items = new Item[] {
-            new Item(AGED_BRIE, 5, 20),
-            new Item(AGED_BRIE, 0, 50),
-            new Item(AGED_BRIE, 0, 40),
-            new Item(AGED_BRIE, -1, 50),
-            new Item(AGED_BRIE, -3, 30)
+            new AgedBrie(5,20),
+            new AgedBrie(0,50),
+            new AgedBrie(0,40),
+            new AgedBrie(-1,50),
+            new AgedBrie(-3,30)
         };
 
         GildedRose app = new GildedRose(items);
@@ -37,11 +36,10 @@ class GildedRoseTest {
 
     @Test
     void testSulfuras() {
-        String SULFURAS = "Sulfuras, Hand of Ragnaros";
         Item[] items = new Item[] {
-            new Item(SULFURAS, 15, 80),
-            new Item(SULFURAS, 0, 80),
-            new Item(SULFURAS, -1, 80)
+            new Sulfuras(15, 80),
+            new Sulfuras(0, 80),
+            new Sulfuras(-1, 80)
         };
 
         GildedRose app = new GildedRose(items);
@@ -60,13 +58,12 @@ class GildedRoseTest {
 
     @Test
     void testBackstagePasses() {
-        String BACKSTAGE_PASSES = "Backstage passes to a TAFKAL80ETC concert";
         Item[] items = new Item[] {
-            new Item(BACKSTAGE_PASSES, 15, 10),
-            new Item(BACKSTAGE_PASSES, 10, 10),
-            new Item(BACKSTAGE_PASSES, 5, 10),
-            new Item(BACKSTAGE_PASSES, -1, 30),
-            new Item(BACKSTAGE_PASSES, 1, 50)
+            new BackstagePass(15,10),
+            new BackstagePass(10,10),
+            new BackstagePass(5,10),
+            new BackstagePass(-1,30),
+            new BackstagePass(1,50)
         };
 
         GildedRose app = new GildedRose(items);
@@ -90,10 +87,10 @@ class GildedRoseTest {
     @Test
     void testOtherItem() {
         Item[] items = new Item[] {
-            new Item("Alterac Swiss", 5, 10),
-            new Item("Wild Hog Shank", -1, 10),
-            new Item("Heaven Peach", -1, 1),
-            new Item("Moon Harvest Pumpkin", -1, -1)
+            new InventoryItem("Alterac Swiss", 5, 10),
+            new InventoryItem("Wild Hog Shank", -1, 10),
+            new InventoryItem("Heaven Peach", -1, 1),
+            new InventoryItem("Moon Harvest Pumpkin", -1, -1)
         };
 
         GildedRose app = new GildedRose(items);
@@ -119,13 +116,13 @@ class GildedRoseTest {
     @Test
     void testConjuredItems() {
         Item[] items = new Item[] {
-            new Item("Mana cake", 5, 10),
-            new Item("Conjured Mana cake", 5, 10),
-            new Item("Orange Juice", -1, 10),
-            new Item("Conjured Orange Juice", -1, 10),
-            new Item("Health Potion", -1, 3),
-            new Item("Conjured Health Potion", -1, 3),
-            new Item("Conjured Cheese", 1, 1)
+            new InventoryItem("Mana cake", 5, 10),
+            new InventoryItem("Conjured Mana cake", 5, 10),
+            new InventoryItem("Orange Juice", -1, 10),
+            new InventoryItem("Conjured Orange Juice", -1, 10),
+            new InventoryItem("Health Potion", -1, 3),
+            new InventoryItem("Conjured Health Potion", -1, 3),
+            new InventoryItem("Conjured Cheese", 1, 1)
         };
 
         GildedRose app = new GildedRose(items);
